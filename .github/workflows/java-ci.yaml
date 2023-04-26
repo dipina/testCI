@@ -10,7 +10,11 @@ jobs:
           with:
             java-version: '17'
             distribution: 'temurin'              
-        - name: Prepare database for integration tests
-            run: sudo /etc/init.d/mysql start & mysql -uroot -proot < sql/create-messages.sql & mvn --batch-mode --update-snapshots datanucleus:enhance datanucleus:schema-create
+        - name: Start mysql
+          run: sudo /etc/init.d/mysql start 
+        - name: Set up the database  
+          run: mysql -uroot -proot < sql/create-messages.sql 
+        - name: Prepare tables with datanucleus  
+          run: mvn --batch-mode --update-snapshots datanucleus:enhance datanucleus:schema-create
         - name: Build with Maven including integration tests
-            run: mvn --batch-mode --update-snapshots verify -Pintegration-tests
+          run: mvn --batch-mode --update-snapshots verify -Pintegration-tests
