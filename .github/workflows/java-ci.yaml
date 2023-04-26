@@ -17,4 +17,4 @@ jobs:
         - name: Prepare tables with datanucleus  
           run: mvn --batch-mode --update-snapshots datanucleus:enhance datanucleus:schema-create
         - name: Build with Maven including integration tests
-          run: mvn --batch-mode --update-snapshots verify -Pintegration-tests
+          run: mvn --batch-mode --update-snapshots verify -Pperformance-tests
