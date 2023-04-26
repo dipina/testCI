@@ -10,13 +10,13 @@ jobs:
           with:
             java-version: '17'
             distribution: 'temurin'              
+        - name: Run tests
+          run: mvn --batch-mode --update-snapshots test
         - name: Start mysql
           run: sudo /etc/init.d/mysql start 
         - name: Set up the database  
           run: mysql -uroot -proot < sql/create-messages.sql 
         - name: Prepare tables with datanucleus  
           run: mvn --batch-mode --update-snapshots datanucleus:enhance datanucleus:schema-create
-        - name: Run tests
-          run: mvn --batch-mode --update-snapshots test
         - name: Build with Maven including integration tests
           run: mvn --batch-mode --update-snapshots verify -Pperformance-tests
